@@ -1,0 +1,144 @@
+<h3 class="d-flex justify-content-center mt-4">Danh sách chương truyện đã đăng</h3>
+<div style="display: flex; flex-direction: column; max-width: 150px;">
+  <a class="btn btn-secondary mt-2" role="button" href="/admin/chapter/trash">Thùng rác ({{deleteCount}}) <i class="fas fa-trash-alt"></i></a>
+  <a class="btn btn-add btn-sm mt-2 mb-2" href="/admin/chapter/create">
+  <i class="fas fa-plus"></i> Thêm chương mới</a>
+</div>
+<div class="card shadow mb-4">
+  <div class="table-responsive">
+      <form class="mt-4" name="container-form" method="POST" action="/admin/chapter/handle-form-action">
+        <div class="mt-4 d-flex ml-3">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="checkbox-all">
+            <label class="form-check-label" for="checkbox-all">
+              Chọn tất cả
+            </label>
+          </div>
+          <select style="min-width: 160px" class="form-control form-control-sm col-sm-2 ml-2 mr-2" name="action" required>
+            <option value="">-- Chọn hành động --</option>
+            <option value="delete">Xóa</option>
+          </select>
+
+          <button class="btn btn-primary btn-sm check-all-submit-btn" disabled="disabled">
+            Thực hiện
+          </button>
+        </div>
+          <table class="table table-bordered mt-4">
+              <thead>
+                  <tr>
+                    <td></td>
+                      <th scope="col">#</th>
+                      <th scope="col">ID Sách</th>
+                      <th scope="col">Tên chương</th>
+                      <th scope="col">Nội dung</th>
+                      <th scope="col-sm-2">Chương</th>
+                      <th scope="col"></th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {{#each chapters}}
+                  <tr>
+                      <td>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" name="chapterIds[]" value="{{this._id}}">
+                          </label>
+                        </div>
+                      </td>
+                      <th scope="row">{{sum @index 1 }}</th>
+                      <td style="padding-bottom: 6px; "> {{this.bookId}} </td>
+                      <td style="padding-bottom: 6px;" > {{this.chapterName}} </td>
+                      <td style="padding-bottom: 6px;" class="max-lines" > {{this.content}} </td>
+                      <td style="padding-bottom: 6px;" > {{this.NumberChapter}} </td>
+                      <td>
+                          <a role="button" class="btn btn-success mt-2" href="/admin/chapter/{{this._id}}/edit" class="btn btn-link">Sửa</a>
+                          <a role="button" class="btn btn-danger mt-2" href="" class="btn btn-link" data-toggle="modal" data-id="{{this._id}}" data-target="#delete-chapter-modal" >Xóa</a>
+                      </td>
+                  </tr>
+
+                  {{else}}
+                  <tr>
+                    <td colspan="5" class="text-center">
+                      Bạn chưa đăng Chapter nào tại website.
+                      <a href="/admin/book/create">Đăng thêm chapter</a>
+                    </td>
+                  </tr>
+                  {{/each}}
+              </tbody>
+          </table>
+      </form>
+  </div>
+</div>
+{{!-- confirm Dele book --}}
+
+<div id="delete-chapter-modal" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Xóa chương?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Bạn chắc chắn muốn xóa chương truyện này?</p>
+      </div>
+      <div class="modal-footer">
+        <button id="btn-delete-book" type="button" class="btn btn-danger">Xóa Bỏ</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{!-- DELETE hidden form --}}
+<form method="POST" name="delete-chapter-form">
+</form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var bookId;
+        var deleteForm = document.forms['delete-chapter-form'];
+        //var containerForm = document.forms['container-form'];
+        var containerForm = $('form[name="container-form"]');
+        var btnDeleteBook = document.getElementById('btn-delete-book');
+        var checkboxAll = $('#checkbox-all');
+        var bookItemCheckbox = $('input[name="chapterIds[]"]');
+        var checkAllSubmitBtn = $('.check-all-submit-btn');
+
+        //When dialog confirm clicked
+        $('#delete-chapter-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            bookId = button.data('id');
+        });
+
+        // when delete book btn clicks
+        btnDeleteBook.onclick = function(){
+            deleteForm.action = '/admin/chapter/' + bookId + '/delete?_method=DELETE';
+            deleteForm.submit();
+        }
+
+        // checkbox all clicked
+        checkboxAll.change(function(){
+          var isCheckedAll = $(this).prop('checked');
+          bookItemCheckbox.prop('checked', isCheckedAll);
+          renderCheckedAllSubmitBtn()
+        })
+        
+        // Book item checkbox changed
+        bookItemCheckbox.change(function() {
+          var isCheckedAll = bookItemCheckbox.length === $('input[name="chapterIds[]"]:checked').length;
+          checkboxAll.prop('checked', isCheckedAll)
+          renderCheckedAllSubmitBtn()
+        })
+        
+        //Re-render check all submit button 
+        function renderCheckedAllSubmitBtn(){
+          var checkedCount = $('input[name="chapterIds[]"]:checked').length;
+          if(checkedCount > 0){
+            checkAllSubmitBtn.attr('disabled', false)
+          }else{
+            checkAllSubmitBtn.attr('disabled', true)
+          }
+        }
+    })
+</script>

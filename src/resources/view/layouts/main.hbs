@@ -7,14 +7,66 @@
         <title>Document</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="stylesheet" href="/css/app.css">
-    </head>
-    <body>
-        <div class="app">
-            <header>
-                {{> header }}
-            </header>
+        <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
-            <div class="container">
+        <!-- Custom fonts for this template -->
+        {{!-- <link href="/css/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+        <link
+            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+            rel="stylesheet"> --}}
+
+        <!-- Custom styles for this template -->
+        {{!-- <link href="/css/sb-admin-2.min.css" rel="stylesheet"> --}}
+
+        <!-- Custom styles for this page -->
+        {{!-- <link href="/css/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet"> --}}
+
+    <!-- Main CSS-->
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <!-- or -->
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <!-- Font-icon css-->
+    <link rel="stylesheet" type="text/css"
+        href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+
+    </head>
+    <body class="app sidebar-mini rtl">
+        <div class="app sidebar-mini rtl">
+            <header class="app-header">
+                <!-- Sidebar toggle button--><a class="app-sidebar__toggle" href="#" data-toggle="sidebar"
+                aria-label="Hide Sidebar"></a>
+                <!-- Navbar Right Menu-->
+                {{!-- {{> header }} --}}
+            </header>
+            
+            <!-- Sidebar menu-->
+            <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+            <aside class="app-sidebar">
+                <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="https://cdn.tgdd.vn//GameApp/1332049//9-500x500.jpg" width="50px"
+                    alt="User Image">
+                <div>
+                    <p class="app-sidebar__user-name"><b>MewMewwww</b></p>
+                    <p class="app-sidebar__user-designation">Sayy hi guy</p>
+                </div>
+                </div>
+                <hr>
+                <ul class="app-menu">
+                <li><a class="app-menu__item" href="/admin/book"><i class='app-menu__icon fas fa-book'></i>
+                    <span class="app-menu__label">Quản lý sách</span></a></li>
+                <li><a class="app-menu__item" href="/admin/genre"><i class='app-menu__icon bx bx-tachometer'></i><span
+                        class="app-menu__label">Quản lý thể loại sách</span></a></li>
+                <li><a class="app-menu__item" href="/admin/chapter"><i class='app-menu__icon fas fa-apple-alt'></i><span
+                        class="app-menu__label">Quản lý chương sách</span></a></li>
+                <li><a class="app-menu__item" href="/admin/user"><i class='app-menu__icon fas fa-users-cog'></i><span
+                        class="app-menu__label">Quản lý user</span></a></li>
+       
+                </ul>
+            </aside>
+            <div class="app-content">
                 {{{body}}}
             </div>
             
@@ -22,6 +74,25 @@
                 {{> footer }}
             </footer>
         </div>
+
+        
+    <!-- Bootstrap core JavaScript-->
+    {{!-- <script src="/css/vendor/jquery/jquery.min.js"></script>
+    <script src="/css/vendor/bootstrap/js/bootstrap.bundle.min.js"></script> --}}
+
+    <!-- Core plugin JavaScript-->
+    {{!-- <script src="/css/vendor/jquery-easing/jquery.easing.min.js"></script> --}}
+
+    <!-- Custom scripts for all pages-->
+    {{!-- <script src="/css/js/sb-admin-2.min.js"></script> --}}
+
+    <!-- Page level plugins -->
+    {{!-- <script src="/css/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="/css/vendor/datatables/dataTables.bootstrap4.min.js"></script> --}}
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/datatables-demo.js"></script>
+
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

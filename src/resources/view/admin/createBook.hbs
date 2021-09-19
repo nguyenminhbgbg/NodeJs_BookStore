@@ -1,0 +1,90 @@
+<div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="tile">
+          <h3 class="tile-title mt-4">Thêm thông tin sách</h3>
+            <div class="tile-body">
+                <form class="row" method="POST" action="/admin/book/createBookData" enctype="multipart/form-data">
+                    <div class="form-group col-md-6">
+                        <label class="control-label">Tên sách: </label>
+                        <input class="form-control" name="bookName" type="text">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="control-label">Tác giả: </label>
+                        <input class="form-control" name="author" rows="5"  type="text" required>
+                    </div>
+                    <div class="form-group col-md-12" style="display: flex; flex-direction: column;">
+                        <label class="control-label">Giới thiệu ngắn: </label>
+                        <textarea class="form-control" name="description" rows="4" ></textarea>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="control-label">rating: </label>
+                        <input class="form-control" name="rating" type="text" required>
+                    </div>
+                    <div class="form-group  col-md-4">
+                        <label class="control-label">Ngôn ngữ: </label>
+                        <input class="form-control" name="language" type="text" required>
+                    </div>
+                    <div class="form-group  col-md-4">
+                        <label class="control-label">Lượt đọc: </label>
+                        <input class="form-control" name="readed" type="text" required>
+                    </div>
+                    <div class="form-group  col-md-4">
+                        <label class="control-label">backgroundColor: </label>
+                        <select class="form-control form-control-sm" name="backgroundColor" required>
+                            <option value="">-- Chọn Color --</option>
+                            <option value="rgba(119,77,143,0.9)">rgba(119,77,143,0.9)</option>
+                            <option value="rgba(247,239,219,0.9)">rgba(247,239,219,0.9)</option>
+                            <option value="rgba(223,132,143,0.9)">rgba(223,132,143,0.9)</option>
+                        </select>
+                    </div> 
+                    
+                    <div class="form-group  col-md-4">
+                        <label class="control-label">navTintColor: </label>
+                        <select class="form-control form-control-sm" name="navTintColor" required>
+                            <option value="">-- Chọn Color --</option>
+                            <option value="#000">#000</option>
+                            <option value="#FFF">#FFF</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="control-label">Thể Loại Sách:</label>
+                        <select class="form-control form-control-sm" name="genre" required>
+                            <option >-- Chọn thể loại sách --</option>
+                            {{#each genre}}
+                            <option value={{this.genreName}}>{{this.genreName}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="form-group  col-md-4">
+                        <label class="control-label">Số trang: </label>
+                        <input class="form-control" name="pageNo" type="text" required>
+                    </div>
+                    <div class="form-group  col-md-4">
+                        <label class="control-label">Completion: </label>
+                        <input class="form-control" name="completion" type="text" required>
+                    </div>
+                    
+                    <div class="form-group  col-md-4">
+                        <label class="control-label">LastRead: </label>
+                        <input class="form-control" name="lastRead" type="text" required>
+                    </div>
+                    <div class=" col-md-4">
+                        <label class="control-label">Hình ảnh:</label>
+                        <input class="" name="bookCover" value="{{book.bookCover}}" type="file" required>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <button type="submit" class="btn btn-secondary mt-2 col-sm-1">Lưu lại</button>
+                    </div>
+               </form>
+            </div>
+            {{!-- <script>
+                function myFunction() {
+                var x = document.getElementById("gen").value;
+                console.log("value:" + x)
+                }
+            </script> --}}
+          {{!-- <a class="btn btn-danger" href="/doc/table-data-table.html">Hủy bỏ</a> --}}
+        </div>
+
+</div>

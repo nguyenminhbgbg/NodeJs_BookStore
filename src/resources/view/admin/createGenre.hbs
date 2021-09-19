@@ -1,0 +1,24 @@
+<div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="tile">
+          <h3 class="tile-title mt-4">Thên thông tin thể loại sách mới</h3>
+                <form class="row" method="POST" action="/admin/genre/createGenreData">
+                    <div class="form-group col-md-12">
+                        <label class="control-label">Tên thể loại: </label>
+                        <input class="form-control" name="genreName" value="{{genre.genreName}}" type="text">
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label class="control-label">Mô tả về thể loại: </label>
+                        <input class="form-control" name="description" value="{{genre.description}}" rows="5"  type="text" required>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <button type="submit" class="btn btn-secondary mt-2 col-sm-1">Lưu lại</button>
+                    </div>
+               </form>
+            </div>
+        </div>  
+          {{!-- <a class="btn btn-danger" href="/doc/table-data-table.html">Hủy bỏ</a> --}}
+     </div>
+
+</div>

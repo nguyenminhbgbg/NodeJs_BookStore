@@ -1,9 +1,31 @@
 @import 'variables';
 
 h1 {
-    color: $red-color-h1
+    color: $red-color-h1;
 }
 
-h2{
+h2 {
     color: $red-color-h2;
 }
+
+.card-course-item {
+    margin-top: 16px;
+}
+
+.user-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    margin-right: 4px;
+}
+.max-lines {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 5; /* Số dòng hiển thị */
+    -webkit-box-orient: vertical;
+}
+
+.td-pd-6 {
+    padding: 6;
+  }

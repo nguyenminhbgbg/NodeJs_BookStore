@@ -1,0 +1,156 @@
+<h3 class="d-flex justify-content-center mt-4" >Danh sách tài khoản user xóa</h3>
+<a class="btn btn-secondary mt-2 mb-2" role="button" href="/admin/book"><i class="fas fa-arrow-left mr-1"></i>Danh sách khóa học</a>
+<div class="card shadow mb-4">
+<div class="table-responsive">
+    <form class="mt-4" name="container-form" method="POST" action="/admin/user/handle-form-trash-action">
+        
+        <div class="mt-4 d-flex">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="checkbox-all">
+            <label class="form-check-label" for="checkbox-all">
+              Chọn tất cả
+            </label>
+          </div>
+          <select style="min-width: 160px" class="form-control form-control-sm col-sm-2 ml-2 mr-2" name="action" required>
+            <option value="">-- Chọn hành động --</option>
+            <option value="delete">Xóa Vĩnh viễn</option>
+            <option value="restore">Khôi phục</option>
+          </select>
+
+          <button class="btn btn-primary btn-sm check-all-submit-btn" disabled="disabled">
+            Thực hiện
+          </button>
+        </div>
+
+        <table class="table mt-4">
+            <thead>
+                <tr>
+                  <td></td>
+                    <th scope="col">#</th>
+                    <th scope="col">Tên User</th>
+                    <th scope="col">Tài khoản</th>
+                    {{!-- <th scope="col">Mật khẩu</th> --}}
+                    <th scope="col">SĐT</th>
+                    <th scope="col">Thời gian xóa</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each users}}
+                <tr>
+                    <td>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="userIds[]" value="{{this._id}}">
+                        </label>
+                      </div>
+                    </td>
+                    <th scope="row">{{sum @index 1 }}</th>
+                    <td>{{this.name}}</td>
+                    <td>{{this.email}}</td>
+                    {{!-- <td>{{this.password}}</td> --}}
+                    <td>{{this.phone}}</td>
+                    <td>{{this.deletedAt}}</td>
+                    <td>
+                        <a role="button" href="" data-id={{this._id}} class="btn btn-success mt-2 btn-restore">Khôi phục</a>
+                        <a role="button" class="btn btn-danger mt-2" href="" class="btn btn-link" data-toggle="modal" data-id="{{this._id}}" data-target="#delete-book-modal" >Xóa vĩnh viễn</a>
+                    </td>
+                </tr>
+
+                {{else}}
+                <tr>
+                  <td colspan="5" class="text-center">
+                    Thùng rác trống.
+                    <a href="/admin/user">danh sách tài khoản user</a>
+                  </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </form>
+
+</div>
+</div>
+{{!-- confirm Dele book --}}
+
+<div id="delete-book-modal" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Xóa tài khoản user?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Hành động này không thể khôi phục, bạn vẫn muốn xóa tài khoản này?</p>
+      </div>
+      <div class="modal-footer">
+        <button id="btn-delete-book" type="button" class="btn btn-danger">Xóa vĩnh viên</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<form method="POST" name="delete-book-form"></form>
+<form method="POST" name="restore-book-form"></form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var bookId;
+        var deleteForm = document.forms['delete-book-form'];
+        var restoreForm = document.forms['restore-book-form'];
+        var btnDeleteBook = document.getElementById('btn-delete-book');
+        var restoreBtn =$('.btn-restore')
+
+        // khai báo biến của checkbox + select xóa xĩnh viễn và khôi phục
+        var containerForm = $('form[name="container-form"]');
+        var btnDeleteBook = document.getElementById('btn-delete-book');
+        var checkboxAll = $('#checkbox-all');
+        var bookItemCheckbox = $('input[name="userIds[]"]');
+        var checkAllSubmitBtn = $('.check-all-submit-btn');
+
+        //When dialog confirm clicked
+        $('#delete-book-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            bookId = button.data('id');
+        });
+        // when delete book btn clicks
+        btnDeleteBook.onclick = function(){
+            deleteForm.action = '/admin/user/' + bookId + '/delete/force?_method=DELETE';
+            deleteForm.submit();
+        }
+
+        //Restore btn click
+        restoreBtn.click(function(e){
+          e.preventDefault();
+          var bookId = $(this).data('id');
+          restoreForm.action = '/admin/user/' + bookId + '/restore?_method=PATCH';
+          restoreForm.submit();
+        })
+
+        // checkbox all clicked
+        checkboxAll.change(function(){
+          var isCheckedAll = $(this).prop('checked');
+          bookItemCheckbox.prop('checked', isCheckedAll);
+          renderCheckedAllSubmitBtn()
+        })
+
+        // Book item checkbox changed
+        bookItemCheckbox.change(function() {
+          var isCheckedAll = bookItemCheckbox.length === $('input[name="userIds[]"]:checked').length;
+          checkboxAll.prop('checked', isCheckedAll)
+          renderCheckedAllSubmitBtn()
+        })
+
+        //Re-render check all submit button 
+        function renderCheckedAllSubmitBtn(){
+          var checkedCount = $('input[name="userIds[]"]:checked').length;
+          if(checkedCount > 0){
+            checkAllSubmitBtn.attr('disabled', false)
+          }else{
+            checkAllSubmitBtn.attr('disabled', true)
+          }
+        }
+    })
+</script>
