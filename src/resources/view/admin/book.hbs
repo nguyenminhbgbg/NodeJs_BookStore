@@ -1,10 +1,8 @@
 <h3 class="d-flex justify-content-center mt-4">Danh sách sách tại website</h3>
 <div style="display: flex; flex-direction: column; max-width: 150px;">
-  <a class="btn btn-secondary mt-2" role="button" href="/admin/book/trash">Thùng rác ({{deleteCount}}) <i class="fas fa-trash-alt"></i></a>
-  <a class="btn btn-add btn-sm mt-2 mb-2" role="button" href="/admin/book/create">
-  <i class="fas fa-plus"></i> Thêm sách mới</a>
+
 </div>
-<div class="card shadow mb-4">
+<div class="card shadow">
 <div class="table-responsive">
     <form class="mt-4" name="container-form" method="POST" action="/admin/book/handle-form-action">
       <div class="mt-4 d-flex ml-3">
@@ -22,16 +20,25 @@
         <button class="btn btn-primary btn-sm check-all-submit-btn" disabled="disabled">
           Thực hiện
         </button>
+        <div class="" style="position: absolute; right: 10px">
+            <a class="btn btn-add" role="button" href="/admin/book/create">
+            <i class="fas fa-plus"></i> Thêm sách</a>
+            <a class="btn btn-secondary" role="button" href="/admin/book/trash">Thùng rác ({{deleteCount}}) <i class="fas fa-trash-alt"></i></a>
+        </div>
       </div>
         <table class="table table-bordered mt-4">
             <thead>
                 <tr>
                   <td></td>
                     <th scope="col">#</th>
-                    <th scope="col">Tên Sách</th>
-                    <th scope="col">Hình Ảnh</th>
-                    <th scope="col">Tác giả</th>
-                    <th scope="col">Ngôn ngữ</th>
+                    <th class="sorting col-lg-4" scope="col">Tên Sách
+                      {{{sortable 'bookName' _sort}}}
+                    </th>
+                    <th class="sorting col-lg-2" scope="col">Hình Ảnh</th>
+                    <th class="sorting col-lg-2" scope="col">Tác giả
+                      {{{sortable 'author' _sort}}}
+                    </th>
+                    <th class="sorting col-lg-1" scope="col">Ngôn ngữ</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -46,12 +53,12 @@
                     </td>
                     <th scope="row">{{sum @index 1 }}</th>
                     <td>{{this.bookName}}</td>
-                    <td>{{this.bookCover}}</td>
+                    <td><img src="{{this.bookCover}}" alt="Err" style="max-width: 90px; max-height: 135px; display: block; margin-left: auto; margin-right: auto;"></td>
                     <td>{{this.author}}</td>
                     <td>{{this.language}}</td>
                     <td>
-                        <a role="button" href="/admin/book/{{this._id}}/edit" class="btn btn-success mt-2">Sửa</a>
-                        <a role="button" href="" class="btn btn-danger mt-2" data-toggle="modal" data-id="{{this._id}}" data-target="#delete-book-modal" >Xóa</a>
+                        <a style="min-width: 70px; max-width: 70px;" role="button" href="/admin/book/{{this._id}}/edit" class="btn btn-success mt-2">Sửa</a>
+                        <a style="min-width: 70px; max-width: 70px;" role="button" href="" class="btn btn-danger mt-2" data-toggle="modal" data-id="{{this._id}}" data-target="#delete-book-modal" >Xóa</a>
                     </td>
                 </tr>
 

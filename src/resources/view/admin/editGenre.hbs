@@ -2,7 +2,10 @@
     <div class="row">
       <div class="col-md-12">
         <div class="tile">
-          <h3 class="tile-title mt-4">Sửa thông tin sách</h3>
+          <div class="d-flex flex-row mt-3 mb-4" style="">
+                <a style="max-height: 34px;" class="btn btn-secondary mr-5" role="button" href="/admin/book"><i class="fas fa-arrow-left mr-1"></i>quay lại</a>
+                <h3>Sửa thông tin sách</h3>
+            </div>
             <div class="tile-body">
                 <form class="row" method="POST" action="/admin/genre/{{genre._id}}?_method=PUT">
                     <div class="form-group col-md-12">

@@ -92,7 +92,7 @@ class NewsController {
     login(req, res, next) {
         var username = req.body.username;
         var password = req.body.password;
-
+        var user = req.body;
         User.findOne({$or: [{email:username},{phone:username}]})
             .then(user =>{
                 if(user){
@@ -106,7 +106,8 @@ class NewsController {
                             let token = jwt.sign({name: user.name, email: user.email}, 'verySecretValue', {expiresIn: '1h'})
                             res.json({
                                 message: 'Đăng nhập thành công!',
-                                token
+                                token,
+                                user
                             })
                         }else{
                             res.json({

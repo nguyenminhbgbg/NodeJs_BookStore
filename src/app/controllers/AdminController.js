@@ -2,7 +2,7 @@ const Chapter = require('../model/Chapters');
 const Book = require('../model/Books');
 const Genres = require('../model/Genres');
 const User = require('../model/Users');
-
+const PAGE_SIZE = 5;
 class NewsController {
     // [GET] /admin
     index(req, res) {
@@ -10,6 +10,21 @@ class NewsController {
     }
     // [GET] /admin/book
     listBook(req, res, next) {
+        var page = req.query.page;
+        if(page){
+            page = parseInt(page);
+            if(page< 1){
+                page = 1;
+            }
+            var skip = (page - 1) * PAGE_SIZE;
+        }
+        let bookQuery = Book.find({}).lean().skip(skip).limit(PAGE_SIZE);
+        
+        if(req.query.hasOwnProperty('_sort')){
+            bookQuery = bookQuery.sort({
+                [req.query.column]: req.query.type
+            })
+        }
         Promise.all([Book.find({}).lean(), Book.countDocumentsDeleted()])
             .then(([books, deleteCount]) =>
                 res.render('admin/book', {
@@ -34,7 +49,11 @@ class NewsController {
 
     // [PUT] /admin/book/:id
     updateBook(req, res, next) {
-        Book.findByIdAndUpdate({ _id: req.params.id }, req.body)
+        const formData = req.body;
+        formData.bookCover = `/img/${req.file.filename}.png`;
+        // http://10.0.2.2:3000
+        // const book = new Book(formData);
+        Book.findByIdAndUpdate({ _id: req.params.id }, formData)
             .then(() => res.redirect('/admin/book'))
             .catch(next);
     }
@@ -51,7 +70,8 @@ class NewsController {
     // [POST] /courses/store
     createBookData(req, res, next) {
         const formData = req.body;
-        formData.bookCover = `http://10.0.2.2:3000/img/${req.file.filename}.png`;
+        formData.bookCover = `/img/${req.file.filename}.png`;
+        // http://10.0.2.2:3000
         const book = new Book(formData);
         book.save()
             .then(() => res.redirect('/admin/book'))
@@ -122,7 +142,22 @@ class NewsController {
 
     // [GET] /admin/chapter
     chapter(req, res, next) {
-        Promise.all([Chapter.find({}).lean(),Book.find({}).lean(), Chapter.countDocumentsDeleted()])
+        var page = req.query.page;
+        if(page){
+            page = parseInt(page);
+            if(page< 1){
+                page = 1;
+            }
+            var skip = (page - 1) * PAGE_SIZE;
+        }
+        let chapterQuery = Chapter.find({}).lean().skip(skip).limit(PAGE_SIZE);
+        
+        if(req.query.hasOwnProperty('_sort')){
+            chapterQuery = chapterQuery.sort({
+                [req.query.column]: req.query.type
+            })
+        }
+        Promise.all([chapterQuery ,Book.find({}).lean(), Chapter.countDocumentsDeleted()])
             .then(([chapters,books, deleteCount]) =>
                 res.render('admin/chapter', {
                     deleteCount,
@@ -234,7 +269,14 @@ class NewsController {
                     // Quản lý thể loại
     // [GET] /admin/chapter
     genre(req, res, next) {
-        Promise.all([Genres.find({}).lean(), Genres.countDocumentsDeleted()])
+        let genresQuery = Genres.find({}).lean();
+        
+        if(req.query.hasOwnProperty('_sort')){
+            genresQuery = genresQuery.sort({
+                [req.query.column]: req.query.type
+            })
+        }
+        Promise.all([genresQuery, Genres.countDocumentsDeleted()])
             .then(([genres, deleteCount]) =>
                 res.render('admin/genre', {
                     deleteCount,
@@ -339,7 +381,24 @@ class NewsController {
     }
                     // Quản lý User
     user(req, res, next) {
-        Promise.all([User.find({}).lean(), User.countDocumentsDeleted()])
+        var page = req.query.page;
+        if(page){
+            page = parseInt(page);
+            if(page< 1){
+                page = 1;
+            }
+            var skip = (page - 1) * PAGE_SIZE;
+        }
+        
+        let userQuery = User.find({}).lean()
+            .skip(skip).limit(PAGE_SIZE);
+        
+        if(req.query.hasOwnProperty('_sort')){
+            userQuery = userQuery.sort({
+                [req.query.column]: req.query.type
+            })
+        }
+        Promise.all([userQuery, User.countDocumentsDeleted()])
             .then(([users, deleteCount]) =>
                 res.render('admin/user', {
                     deleteCount,
