@@ -6,12 +6,15 @@ const morgan = require('morgan');
 const handlebars = require('express-handlebars');
 const db = require('./config/db/index');
 const SortMiddleware = require('./app/middlewares/SortMiddleware');
+var cookieParser = require('cookie-parser')
 
 var methodOverride = require('method-override');
 // connect to DB
 db.connect();
 
 const route = require('./routes');
+
+app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/img' , express.static('uploads'))
 app.use(
@@ -64,6 +67,7 @@ app.engine(
     }),
 );
 app.set('view engine', 'hbs');
+// 
 app.set('views', path.join(__dirname, 'resources', 'view'));
 
 // route init

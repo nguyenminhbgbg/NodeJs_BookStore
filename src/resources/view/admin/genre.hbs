@@ -1,99 +1,115 @@
-<h3 class="d-flex justify-content-center mt-4">Danh sách thể loại sách</h3>
-<div class="card shadow mb-4">
-<div class="table-responsive">
-    <form class="mt-4" name="container-form" method="POST" action="/admin/genre/handle-form-action">
-      <div class="mt-4 d-flex ml-3" style="position: relative;">
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="" id="checkbox-all">
-          <label class="form-check-label" for="checkbox-all">
-            Chọn tất cả
-          </label>
-        </div>
-        <select style="min-width: 160px" class="form-control form-control-sm col-sm-2 ml-2 mr-2" name="action" required>
-          <option value="">-- Chọn hành động --</option>
-          <option value="delete">Xóa</option>
-        </select>
-        <button class="btn btn-primary btn-sm check-all-submit-btn" disabled="disabled">
-          Thực hiện
-        </button>
-        <div class="" style="position: absolute; right: 10px">
-          <a class="btn btn-add" href="/admin/genre/create">
-          <i class="fas fa-plus"></i> Thêm thể loại</a>
-          <a class="btn btn-secondary " role="button" href="/admin/genre/trash">Thùng rác ({{deleteCount}}) <i class="fas fa-trash-alt"></i></a>
-        </div>
-      </div>
-        <table class="table table-bordered mt-4">
-            <thead>
-                <tr>
-                  <td></td>
-                    <th  class="sorting">ID</th>
-                    <th class="sorting col-lg-2">Tên thể loại
-                      {{{sortable 'genreName' _sort}}}
-                    </th>
-                    <th class="sorting col-lg-5" class="sorting">Giới thiệu chung
-                      {{{sortable 'description' _sort}}}
-                    </th>
-                    <th class="sorting col-lg-2" class="sorting">Thời gian tạo
-                      {{{sortable 'createdAt' _sort}}}
-                    </th>
-                    <th class="sorting col-lg-2" class="sorting"></th>
-                </tr>
-            </thead>
-            <tbody>
-                {{#each genres}}
-                <tr>
-                    <td>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="genreIds[]" value="{{this._id}}">
-                        </label>
-                      </div>
-                    </td>
-                    <th scope="row">{{sum @index 1 }}</th>
-                    <td>{{this.genreName}}</td>
-                    <td>{{this.description}}</td>
-                    <td>{{this.createdAt}}</td>
-                    <td>
-                        <a style="min-width: 70px; max-width: 70px;" role="button" class="btn btn-success mt-2" href="/admin/genre/{{this._id}}/edit" class="btn btn-link">Sửa</a>
-                        <a style="min-width: 70px; max-width: 70px;" role="button" class="btn btn-danger mt-2" href="" class="btn btn-link" data-toggle="modal" data-id="{{this._id}}" data-target="#delete-genre-modal" >Xóa</a>
-                    </td>
-                </tr>
-
-                {{else}}
-                <tr>
-                  <td colspan="5" class="text-center">
-                    Bạn chưa đăng quyển sách nào tại website.
-                    <a href="/admin/book/create">Đăng thêm sách</a>
-                  </td>
-                </tr>
-                {{/each}}
-            </tbody>
-        </table>
-    </form>
-</div>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+    
 {{!-- confirm Dele book --}}
+  {{> header}}
+  {{> sidebar }}
+  <div class="app-content">
+  <h3 class="d-flex justify-content-center mt-4">Danh sách thể loại sách</h3>
+  <div class="card shadow mb-4">
+  <div class="table-responsive">
+      <form class="mt-4" name="container-form" method="POST" action="/admin/genre/handle-form-action">
+        <div class="mt-4 d-flex ml-3" style="position: relative;">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="checkbox-all">
+            <label class="form-check-label" for="checkbox-all">
+              Chọn tất cả
+            </label>
+          </div>
+          <select style="min-width: 160px" class="form-control form-control-sm col-sm-2 ml-2 mr-2" name="action" required>
+            <option value="">-- Chọn hành động --</option>
+            <option value="delete">Xóa</option>
+          </select>
+          <button class="btn btn-primary btn-sm check-all-submit-btn" disabled="disabled">
+            Thực hiện
+          </button>
+          <div class="" style="position: absolute; right: 10px">
+            <a class="btn btn-add" href="/admin/genre/create">
+            <i class="fas fa-plus"></i> Thêm thể loại</a>
+            <a class="btn btn-secondary " role="button" href="/admin/genre/trash">Thùng rác ({{deleteCount}}) <i class="fas fa-trash-alt"></i></a>
+          </div>
+        </div>
+          <table class="mt-4">
+              <thead>
+                  <tr>
+                    <td></td>
+                      <th  class="sorting">ID</th>
+                      <th class="sorting col-lg-2">Tên thể loại
+                        {{{sortable 'genreName' _sort}}}
+                      </th>
+                      <th class="sorting col-lg-5" class="sorting">Giới thiệu chung
+                        {{{sortable 'description' _sort}}}
+                      </th>
+                      <th class="sorting col-lg-2" class="sorting">Thời gian tạo
+                        {{{sortable 'createdAt' _sort}}}
+                      </th>
+                      <th class="sorting col-lg-2" class="sorting"></th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {{#each genres}}
+                  <tr>
+                      <td>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" name="genreIds[]" value="{{this._id}}">
+                          </label>
+                        </div>
+                      </td>
+                      <th scope="row">{{sum @index 1 }}</th>
+                      <td>{{this.genreName}}</td>
+                      <td>{{this.description}}</td>
+                      <td>{{this.createdAt}}</td>
+                      <td>
+                          <a style="min-width: 70px; max-width: 70px;" role="button" class="btn btn-success mt-2" href="/admin/genre/{{this._id}}/edit" class="btn btn-link">Sửa</a>
+                          <a style="min-width: 70px; max-width: 70px;" role="button" class="btn btn-danger mt-2" href="" class="btn btn-link" data-toggle="modal" data-id="{{this._id}}" data-target="#delete-genre-modal" >Xóa</a>
+                      </td>
+                  </tr>
 
-<div id="delete-genre-modal" class="modal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Xóa sách?</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p>Bạn chắc chắn muốn xóa quyển sách này?</p>
-      </div>
-      <div class="modal-footer">
-        <button id="btn-delete-book" type="button" class="btn btn-danger">Xóa Bỏ</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                  {{else}}
+                  <tr>
+                    <td colspan="5" class="text-center">
+                      Bạn chưa đăng quyển sách nào tại website.
+                      <a href="/admin/book/create">Đăng thêm sách</a>
+                    </td>
+                  </tr>
+                  {{/each}}
+              </tbody>
+          </table>
+      </form>
+  </div>
+  </div>
+
+  </div>
+  
+</body>
+</html>
+{{!-- DELETE hidden form --}}
+<div id="delete-genre-modal" class="modal app-content sidebar-mini rtl" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Xóa sách?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Bạn chắc chắn muốn xóa quyển sách này?</p>
+        </div>
+        <div class="modal-footer">
+          <button id="btn-delete-book" type="button" class="btn btn-danger">Xóa Bỏ</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
-
-{{!-- DELETE hidden form --}}
 <form method="POST" name="delete-book-form">
 </form>
 

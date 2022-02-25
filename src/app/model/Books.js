@@ -21,7 +21,6 @@ const Book = new Schema(
         navTintColor: { type: String, required: true },
         completion: { type: String, required: true },
         lastRead: { type: String, required: true },
-
     },
     { 
         id: false,

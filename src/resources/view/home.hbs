@@ -1,5 +1,19 @@
-<div>
-      <div class="col-md-12 mt-4">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="app-content">
+      {{> header }}
+      {{> sidebar }}
+      <div class="app sidebar-mini rtl">
+      <div>
+      <div class="col-md-12">
         <div class="app-title">
           <ul class="app-breadcrumb breadcrumb">
             <li class="breadcrumb-item"><a href="#"><b>Bảng điều khiển</b></a></li>
@@ -7,14 +21,35 @@
           <div id="clock"></div>
         </div>
       </div>
-      <h2 class="d-flex justify-content-center">Trang quản lý ứng dụng BookStoreee</h2>
-      <div class="column" style="display: flex; justify-content: space-around;">
-        <img src="https://cdn-icons-png.flaticon.com/512/3468/3468210.png" style="min-width: 120px; min-height: 120px; max-width: 120px; max-height: 120px;" alt="Err??">
-        <img src="https://cdn-icons-png.flaticon.com/512/3468/3468306.png" style="min-width: 120px; min-height: 120px; max-width: 120px; max-height: 120px;" alt="Err??">
-        <img src="https://cdn-icons-png.flaticon.com/512/3468/3468331.png" style="min-width: 120px; min-height: 120px; max-width: 120px; max-height: 120px;" alt="Err??">
-        <img src="https://cdn-icons-png.flaticon.com/512/3468/3468324.png" style="min-width: 120px; min-height: 120px; max-width: 120px; max-height: 120px;" alt="Err??">
-        <img src="https://cdn-icons-png.flaticon.com/512/3468/3468447.png" style="min-width: 120px; min-height: 120px; max-width: 120px; max-height: 120px;" alt="Err??">
-        <img src="https://cdn-icons-png.flaticon.com/512/3468/3468106.png" style="min-width: 120px; min-height: 120px; max-width: 120px; max-height: 120px;" alt="Err??">
-        
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="card">
+              <div class="card-body row">
+                <i class='fas fa-book' style='font-size:52px'></i>
+                <div style='margin-left: 10px;' class="">
+                  <h5 class="card-title">Tổng số sách</h5>
+                  <p style="font-size: 20px;" class="card-text">12</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="card">
+              <div class="card-body row">
+                <i class='fas fa-users' style='font-size:52px'></i>
+                <div style='margin-left: 10px;' class="">
+                  <h5 class="card-title">Tổng số User</h5>
+                  <p style="font-size: 20px;" class="card-text">20</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+  </div>
+  </div>
+</body>
+</html>
+
