@@ -1,13 +1,8 @@
 <h3 class="d-flex justify-content-center mt-4">Danh sách thể loại sách</h3>
-<div style="display: flex; flex-direction: column; max-width: 150px;">
-  <a class="btn btn-secondary mt-2" role="button" href="/admin/genre/trash">Thùng rác ({{deleteCount}}) <i class="fas fa-trash-alt"></i></a>
-  <a class="btn btn-add btn-sm mt-2 mb-2" href="/admin/genre/create">
-  <i class="fas fa-plus"></i> Thêm thể loại sách</a>
-</div>
 <div class="card shadow mb-4">
 <div class="table-responsive">
     <form class="mt-4" name="container-form" method="POST" action="/admin/genre/handle-form-action">
-      <div class="mt-4 d-flex ml-3">
+      <div class="mt-4 d-flex ml-3" style="position: relative;">
         <div class="form-check">
           <input class="form-check-input" type="checkbox" value="" id="checkbox-all">
           <label class="form-check-label" for="checkbox-all">
@@ -18,20 +13,30 @@
           <option value="">-- Chọn hành động --</option>
           <option value="delete">Xóa</option>
         </select>
-
         <button class="btn btn-primary btn-sm check-all-submit-btn" disabled="disabled">
           Thực hiện
         </button>
+        <div class="" style="position: absolute; right: 10px">
+          <a class="btn btn-add" href="/admin/genre/create">
+          <i class="fas fa-plus"></i> Thêm thể loại</a>
+          <a class="btn btn-secondary " role="button" href="/admin/genre/trash">Thùng rác ({{deleteCount}}) <i class="fas fa-trash-alt"></i></a>
+        </div>
       </div>
         <table class="table table-bordered mt-4">
             <thead>
                 <tr>
                   <td></td>
-                    <th scope="col"class="sorting">#</th>
-                    <th scope="col" class="sorting">Tên thể loại</th>
-                    <th scope="col" class="sorting">Giới thiệu chung</th>
-                    <th scope="col" class="sorting">Thời gian tạo</th>
-                    <th scope="col" class="sorting"></th>
+                    <th  class="sorting">ID</th>
+                    <th class="sorting col-lg-2">Tên thể loại
+                      {{{sortable 'genreName' _sort}}}
+                    </th>
+                    <th class="sorting col-lg-5" class="sorting">Giới thiệu chung
+                      {{{sortable 'description' _sort}}}
+                    </th>
+                    <th class="sorting col-lg-2" class="sorting">Thời gian tạo
+                      {{{sortable 'createdAt' _sort}}}
+                    </th>
+                    <th class="sorting col-lg-2" class="sorting"></th>
                 </tr>
             </thead>
             <tbody>
@@ -48,8 +53,8 @@
                     <td>{{this.description}}</td>
                     <td>{{this.createdAt}}</td>
                     <td>
-                        <a role="button" class="btn btn-success mt-2" href="/admin/genre/{{this._id}}/edit" class="btn btn-link">Sửa</a>
-                        <a role="button" class="btn btn-danger mt-2" href="" class="btn btn-link" data-toggle="modal" data-id="{{this._id}}" data-target="#delete-genre-modal" >Xóa</a>
+                        <a style="min-width: 70px; max-width: 70px;" role="button" class="btn btn-success mt-2" href="/admin/genre/{{this._id}}/edit" class="btn btn-link">Sửa</a>
+                        <a style="min-width: 70px; max-width: 70px;" role="button" class="btn btn-danger mt-2" href="" class="btn btn-link" data-toggle="modal" data-id="{{this._id}}" data-target="#delete-genre-modal" >Xóa</a>
                     </td>
                 </tr>
 

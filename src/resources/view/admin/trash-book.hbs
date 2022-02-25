@@ -1,9 +1,9 @@
 <h3 class="d-flex justify-content-center mt-4">Danh sách sách tại thùng rác</h3>
-<a class="btn btn-add btn-sm mt-2 mb-2" role="button" href="/admin/book"><i class="fas fa-arrow-left mr-1"></i>Danh sách khóa học</a>
+<a class="btn btn-secondary mb-2" role="button" href="/admin/book"><i class="fas fa-arrow-left mr-1"></i>quay lại</a>
 <div class="table-responsive">
 <div class="table-responsive">
     <form class="mt-4" name="container-form" method="POST" action="/admin/book/handle-form-trash-action">
-        <div class="mt-4 d-flex">
+        <div class="mt-4 ml-3 d-flex">
           <div class="form-check">
             <input class="form-check-input" type="checkbox" value="" id="checkbox-all">
             <label class="form-check-label" for="checkbox-all">
@@ -24,11 +24,12 @@
         <table class="table table-bordered mt-4">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Tên Sách</th>
+                    <th scope="col"></th>
+                    <th scope="col">ID</th>
+                    <th class="sorting col-lg-4" scope="col">Tên Sách</th>
                     <th scope="col">Hình Ảnh</th>
-                    <th scope="col">Tác giả</th>
-                    <th scope="col">Thời gian xóa</th>
+                    <th class="sorting col-lg-2" scope="col">Tác giả</th>
+                    <th class="sorting col-lg-2" scope="col">Thời gian xóa</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -43,12 +44,12 @@
                     </td>
                     <th scope="row">{{sum @index 1 }}</th>
                     <td>{{this.bookName}}</td>
-                    <td>{{this.bookCover}}</td>
+                    <td><img src={{this.bookCover}} alt="Err" style="max-width: 90px; max-height: 135px; display: block; margin-left: auto; margin-right: auto;"></td>
                     <td>{{this.author}}</td>
                     <td>{{this.deletedAt}}</td>
                     <td>
-                        <a role="button" href="" data-id={{this._id}} class="btn btn-success mt-2 btn-restore">Khôi phục</a>
-                        <a role="button" class="btn btn-danger mt-2" href="" class="btn btn-link" data-toggle="modal" data-id="{{this._id}}" data-target="#delete-book-modal" >Xóa vĩnh viễn</a>
+                        <a role="button" href="" data-id={{this._id}} class="btn btn-success mt-2 btn-restore" style="min-width: 110px; max-width: 110px;">Khôi phục</a>
+                        <a role="button" class="btn btn-danger mt-2" href="" class="btn btn-link" data-toggle="modal" data-id="{{this._id}}" style="min-width: 90px; max-width: 110px;" data-target="#delete-book-modal" >Xóa vĩnh viễn</a>
                     </td>
                 </tr>
 

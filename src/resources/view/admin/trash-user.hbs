@@ -1,10 +1,10 @@
 <h3 class="d-flex justify-content-center mt-4" >Danh sách tài khoản user xóa</h3>
-<a class="btn btn-secondary mt-2 mb-2" role="button" href="/admin/book"><i class="fas fa-arrow-left mr-1"></i>Danh sách khóa học</a>
+<a class="btn btn-secondary mt-2 mb-2" role="button" href="/admin/user"><i class="fas fa-arrow-left mr-1"></i>Quay lại</a>
 <div class="card shadow mb-4">
 <div class="table-responsive">
     <form class="mt-4" name="container-form" method="POST" action="/admin/user/handle-form-trash-action">
         
-        <div class="mt-4 d-flex">
+        <div class="mt-4 ml-3 d-flex">
           <div class="form-check">
             <input class="form-check-input" type="checkbox" value="" id="checkbox-all">
             <label class="form-check-label" for="checkbox-all">
@@ -26,12 +26,11 @@
             <thead>
                 <tr>
                   <td></td>
-                    <th scope="col">#</th>
-                    <th scope="col">Tên User</th>
-                    <th scope="col">Tài khoản</th>
+                    <th scope="col">ID</th>
+                    <th class="sorting col-lg-2" scope="col">Tên User</th>
+                    <th class="sorting col-lg-3" scope="col">Tài khoản</th>
                     {{!-- <th scope="col">Mật khẩu</th> --}}
-                    <th scope="col">SĐT</th>
-                    <th scope="col">Thời gian xóa</th>
+                    <th class="sorting col-lg-3" scope="col">Thời gian xóa</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -48,11 +47,10 @@
                     <td>{{this.name}}</td>
                     <td>{{this.email}}</td>
                     {{!-- <td>{{this.password}}</td> --}}
-                    <td>{{this.phone}}</td>
                     <td>{{this.deletedAt}}</td>
                     <td>
-                        <a role="button" href="" data-id={{this._id}} class="btn btn-success mt-2 btn-restore">Khôi phục</a>
-                        <a role="button" class="btn btn-danger mt-2" href="" class="btn btn-link" data-toggle="modal" data-id="{{this._id}}" data-target="#delete-book-modal" >Xóa vĩnh viễn</a>
+                        <a style="min-width: 110px; max-width: 110px;" role="button" href="" data-id={{this._id}} class="btn btn-success mt-2 btn-restore">Khôi phục</a>
+                        <a style="min-width: 110px; max-width: 110px;" role="button" class="btn btn-danger mt-2" href="" class="btn btn-link" data-toggle="modal" data-id="{{this._id}}" data-target="#delete-book-modal" >Xóa vĩnh viễn</a>
                     </td>
                 </tr>
 
