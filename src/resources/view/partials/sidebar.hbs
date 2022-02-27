@@ -1,0 +1,43 @@
+<aside class="app-sidebar">
+    <div class="app-sidebar__user">
+        <a href="/">
+            <img class="app-sidebar__user-avatar" src="https://www.pinclipart.com/picdir/big/559-5594866_necktie-drawing-vector-round-avatar-user-icon-png.png" width="50px" alt="User Image">
+        </a>
+    <div>
+        <p class="app-sidebar__user-name"><b>BookStore</b></p>
+        <p class="app-sidebar__user-designation">Trang quản lý</p>
+    </div>
+    </div>
+    <hr>
+    <ul class="app-menu">
+    <li><a class="app-menu__item" href="/admin/book"><i class='app-menu__icon fas fa-book'></i>
+        <span class="app-menu__label">Quản lý sách</span></a></li>
+    <li><a class="app-menu__item" href="/admin/genre"><i class='app-menu__icon bx bx-tachometer'></i><span
+            class="app-menu__label">Quản lý thể loại sách</span></a></li>
+    <li><a class="app-menu__item" href="/admin/chapter"><i class='app-menu__icon fas fa-apple-alt'></i><span
+            class="app-menu__label">Quản lý chương sách</span></a></li>
+    <li><a class="app-menu__item" href="/admin/user"><i class='app-menu__icon fas fa-users-cog'></i><span
+            class="app-menu__label">Quản lý user</span></a></li>
+
+    </ul>
+    <form name="logout-form" method="POST" action="/logout">
+        <button id="btn-logout" style="position: absolute; bottom: 0; right: 0; left: 0;" type="button" class="btn btn-secondary">
+          <i class="fas fa-sign-out-alt "></i> LOG OUT
+        </button>
+    </form>
+    
+    
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        var logOutForm = $('form[name="logout-form"]');
+        var btnLogout = document.getElementById('btn-logout');
+        // when delete book btn clicks
+        btnLogout.onclick = function(){
+            logOutForm.submit();
+        }
+
+    })
+</script>
+
+</aside>

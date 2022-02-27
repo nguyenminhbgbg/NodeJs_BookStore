@@ -2,15 +2,21 @@ const Chapter = require('../model/Chapters');
 const Book = require('../model/Books');
 const Genres = require('../model/Genres');
 const User = require('../model/Users');
+const bcrypt = require('bcryptjs');
+
 const PAGE_SIZE = 5;
 class NewsController {
     // [GET] /admin
     index(req, res) {
+        const count = Book.estimatedDocumentCount();
+
+        console.log("cout : " + count);
         res.render('admin/homeAdmin');
     }
+    
     // [GET] /admin/book
     listBook(req, res, next) {
-        var page = req.query.page;
+        var page = req.query.page || 1;
         if(page){
             page = parseInt(page);
             if(page< 1){
@@ -19,13 +25,14 @@ class NewsController {
             var skip = (page - 1) * PAGE_SIZE;
         }
         let bookQuery = Book.find({}).lean().skip(skip).limit(PAGE_SIZE);
+        let bookQue = Book.find({}).lean()
         
         if(req.query.hasOwnProperty('_sort')){
-            bookQuery = bookQuery.sort({
+            bookQue = bookQue.sort({
                 [req.query.column]: req.query.type
             })
         }
-        Promise.all([Book.find({}).lean(), Book.countDocumentsDeleted()])
+        Promise.all([bookQue, Book.countDocumentsDeleted()])
             .then(([books, deleteCount]) =>
                 res.render('admin/book', {
                     deleteCount,
@@ -70,7 +77,7 @@ class NewsController {
     // [POST] /courses/store
     createBookData(req, res, next) {
         const formData = req.body;
-        formData.bookCover = `/img/${req.file.filename}.png`;
+        formData.bookCover = `/img/${req.file.filename}`;
         // http://10.0.2.2:3000
         const book = new Book(formData);
         book.save()
@@ -381,7 +388,7 @@ class NewsController {
     }
                     // Quản lý User
     user(req, res, next) {
-        var page = req.query.page;
+        var page = req.query.page || 1;
         if(page){
             page = parseInt(page);
             if(page< 1){
@@ -403,6 +410,8 @@ class NewsController {
                 res.render('admin/user', {
                     deleteCount,
                     users,
+                    page,
+                    
                 }),
             )
             .catch(next);
@@ -467,6 +476,30 @@ class NewsController {
                 res.json({ message: 'Action is invalid' });
         }
     }
+    // [GET] /admin/genre/:id/edit
+    editUser(req, res, next) {
+        User.findById(req.params.id)
+            .lean()
+            .then((user) => {
+                res.render('admin/editUser', { user });
+            })
+            .catch(next);
+    }
 
+    // [PUT] /admin/genre/:id
+    updateUser(req, res, next) {
+        const userNew = req.body;
+        bcrypt.hash(req.body.password, 10 , function(err, hashedPass){
+            if(err){
+                res.json({
+                    error: err
+                })
+            }
+            userNew.password = hashedPass;
+            User.findByIdAndUpdate({ _id: req.params.id }, req.body)
+            .then(() => res.redirect('/admin/user'))
+            .catch(next);
+        })
+    }
 }
 module.exports = new NewsController();

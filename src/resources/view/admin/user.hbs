@@ -1,85 +1,104 @@
-<h3 class="d-flex justify-content-center mt-4">Danh sách tài khoản User</h3>
-<div class="card shadow">
-  <div class="table-responsive">
-      <form class="mt-4" name="container-form" method="POST" action="/admin/user/handle-form-action-user">
-        <div class="mt-4 d-flex ml-3" style="position: relative;">
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="checkbox-all">
-            <label class="form-check-label" for="checkbox-all">
-              Chọn tất cả
-            </label>
-          </div>
-          <select style="min-width: 160px" class="form-control form-control-sm col-sm-2 ml-2 mr-2" name="action" required>
-            <option value="">-- Chọn hành động --</option>
-            <option value="delete">Xóa</option>
-          </select>
-          <button class="btn btn-primary btn-sm check-all-submit-btn" disabled="disabled">
-            Thực hiện
-          </button>
-          <div class="" style="position: absolute; right: 10px">
-            <a class="btn btn-secondary" role="button" href="/admin/user/trash">Thùng rác ({{deleteCount}}) <i class="fas fa-trash-alt"></i></a>
-          </div>
-        </div>
-          <table class="table table-bordered mt-4">
-              <thead>
-                  <tr>
-                    <td></td>
-                      <th scope="col">ID</th>
-                      <th scope="col">Tên User
-                        {{{sortable 'name' _sort}}}
-                      </th>
-                      <th scope="col">Tài khoản
-                        {{{sortable 'email' _sort}}}
-                      </th>
-                      {{!-- <th scope="col">Mật khẩu</th> --}}
-                      <th scope="col">Thời gian tạo
-                        {{{sortable 'createdAt' _sort}}}
-                      </th>
-                      <th scope="col"></th>
-                  </tr>
-              </thead>
-              <tbody>
-                  {{#each users}}
-                  <tr>
-                      <td>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" name="userIds[]" value="{{this._id}}">
-                          </label>
-                        </div>
-                      </td>
-                      <th scope="row">{{sum @index 1 }}</th>
-                      <td>{{this.name}}</td>
-                      <td>{{this.email}}</td>
-                      {{!-- <td>{{this.password}}</td> --}}
-                      <td>{{this.createdAt}}</td>
-                      <td>
-                          <a role="button" class="btn btn-success mt-2" href="/admin/user/{{this._id}}/edit" class="btn btn-link">Sửa</a>
-                          <a role="button" class="btn btn-danger mt-2" href="" class="btn btn-link" data-toggle="modal" data-id="{{this._id}}" data-target="#delete-book-modal" >Xóa</a>
-                      </td>
-                  </tr>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div class="app-content">
+    
+    {{> header}}
+    {{> sidebar}}
+    <h3 class="d-flex justify-content-center mt-4">Danh sách tài khoản User</h3>
+    <div class="card shadow ">
+      <div class="table-responsive">
+          <form class="mt-4" name="container-form" method="POST" action="/admin/user/handle-form-action-user">
+            <div class="mt-4 d-flex ml-3" style="position: relative;">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="checkbox-all">
+                <label class="form-check-label" for="checkbox-all">
+                  Chọn tất cả
+                </label>
+              </div>
+              <select style="min-width: 160px" class="form-control form-control-sm col-sm-2 ml-2 mr-2" name="action" required>
+                <option value="">-- Chọn hành động --</option>
+                <option value="delete">Xóa</option>
+              </select>
+              <button class="btn btn-primary btn-sm check-all-submit-btn" disabled="disabled">
+                Thực hiện
+              </button>
+              <div class="" style="position: absolute; right: 10px">
+                <a class="btn btn-secondary" role="button" href="/admin/user/trash">Thùng rác ({{deleteCount}}) <i class="fas fa-trash-alt"></i></a>
+              </div>
+            </div>
+              <table class="mt-4">
+                  <thead>
+                      <tr>
+                        <td></td>
+                          <th scope="col">ID</th>
+                          <th scope="col">Tên User
+                            {{{sortable 'name' _sort}}}
+                          </th>
+                          <th scope="col">Tài khoản
+                            {{{sortable 'email' _sort}}}
+                          </th>
+                          {{!-- <th scope="col">Mật khẩu</th> --}}
+                          <th scope="col">Thời gian tạo
+                            {{{sortable 'createdAt' _sort}}}
+                          </th>
+                          <th scope="col">Chức năng</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {{#each users}}
+                      <tr>
+                          <td>
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" name="userIds[]" value="{{this._id}}">
+                              </label>
+                            </div>
+                          </td>
+                          <th scope="row">{{sum @index 1 }}</th>
+                          <td>{{this.name}}</td>
+                          <td>{{this.email}}</td>
+                          {{!-- <td>{{this.password}}</td> --}}
+                          <td>{{this.createdAt}}</td>
+                          <td>
+                              <a role="button" class="btn mt-2" href="/admin/user/{{this._id}}/edit" class="btn btn-link"><i class="fas fa-edit"></i></a>
+                              <a role="button" class="btn mt-2" data-toggle="modal" data-id="{{this._id}}" data-target="#delete-book-modal" ><i class="fas fa-trash-alt"></i></a>
+                          </td>
+                      </tr>
 
-                  {{else}}
-                  <tr>
-                    <td colspan="5" class="text-center">
-                      Danh sách tài khoản người dùng trống!
-                    </td>
-                  </tr>
-                  {{/each}}
-              </tbody>
-          </table>
-          <div id="paging"></div>
-      </form>
+                      {{else}}
+                      <tr>
+                        <td colspan="5" class="text-center">
+                          Danh sách tài khoản người dùng trống!
+                        </td>
+                      </tr>
+                      {{/each}}
+                  </tbody>
+              </table>
+              <div id="paging"></div>
+          </form>
+      </div>
+    </div>
+    <div style="display: flex; justify-content: space-between;" class="pagination">
+        <div class="lef-pagination">
+          Hiển thị {{page}} đến 6 trong 6 mục
+        </div>
+        <div class="right-pagination">
+          <button type="button" id="btn-previous" data-id="{{page}}" class="btn"><i class="fas fa-angle-double-left"></i></button>
+          <button type="button" class="btn">{{page}}</button>
+          <button type="button" data-id="{{page}}" id="btn-next" class="btn"><i class="fas fa-angle-double-right"></i></button>
+
+        </div>
+    </div>
   </div>
-</div>
-<nav style="width: 100%; position: relative;" aria-label="Page navigation example">
-  <ul class="pagination" style="right: 0px; position: absolute">
-    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-    <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
-    <li class="page-item"><a class="page-link" href="?page=2">2</a></li>
-    <li class="page-item"><a class="page-link" href="?page=3">3</a></li>
-    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-  </ul>
-</nav>
+</body>
+</html>
+
 {{!-- confirm Dele book --}}
 
 <div id="delete-book-modal" class="modal" tabindex="-1" role="dialog">
@@ -107,13 +126,27 @@
 </form>
 <form method="POST" name="page-onclick">
 </form>
+<form method="GET" name="page-previous">
+</form>
+<form method="GET" name="page-next">
+</form>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var userId;
+        var pageNumber = 1
+        var pagePrevious = pageNumber - 1;
+        var pageNext = pageNumber + 1;
+
         var deleteForm = document.forms['delete-book-form'];
         var pageOnclickForm = document.forms['page-onclick'];
+        var pagePreviousForm = document.forms['page-previous'];
+        var pageNextForm = document.forms['page-next'];
         var containerForm = $('form[name="container-form"]');
+
         var btnDeleteBook = document.getElementById('btn-delete-book');
+        var btnPrevious = document.getElementById('btn-previous');
+        var btnNext = document.getElementById('btn-next');
+
         var checkboxAll = $('#checkbox-all');
         var bookItemCheckbox = $('input[name="userIds[]"]');
         var checkAllSubmitBtn = $('.check-all-submit-btn');
@@ -136,7 +169,15 @@
             deleteForm.action = '/admin/user/' + userId + '/delete?_method=DELETE';
             deleteForm.submit();
         }
-
+        // when btnPrevious btn clicks
+        btnPrevious.onclick = function(){
+            pagePreviousForm.action = '/admin/user/?page='+ 3 ;
+            pagePreviousForm.submit();
+        }
+        btnNext.onclick = function(){
+            pageNextForm.action = '/admin/user/?page=' + pageNext ;
+            pageNextForm.submit();
+        }
         // checkbox all clicked
         checkboxAll.change(function(){
           var isCheckedAll = $(this).prop('checked');

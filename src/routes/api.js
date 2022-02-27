@@ -10,7 +10,7 @@ router.post('/login', ApiController.login);
 // admin book, chapter, genre
 router.get('/book', ApiController.book);
 
-router.get('/book/:status', ApiController.bookBestSeller);
+router.get('/book/:genre', ApiController.bookBestSeller);
 // router.get('/book', ApiController.book);
 // router.get('/book', ApiController.book);
 

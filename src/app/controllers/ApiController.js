@@ -22,7 +22,7 @@ class NewsController {
     }
 
     bookBestSeller(req, res, next) {
-        Book.find({status: req.params.status})
+        Book.find({genre: req.params.genre})
             .then((books) => {
                 res.json(books);
             })
@@ -91,36 +91,36 @@ class NewsController {
 
     login(req, res, next) {
         var username = req.body.username;
-        var password = req.body.password;
-        var user = req.body;
+        var password = req.body.password; 
         User.findOne({$or: [{email:username},{phone:username}]})
-            .then(user =>{
-                if(user){
-                    bcrypt.compare(password, user.password, function(err, result){
-                        if(err){
-                            res.json({
-                                error: err
-                            })
-                        }
-                        if(result){
-                            let token = jwt.sign({name: user.name, email: user.email}, 'verySecretValue', {expiresIn: '1h'})
-                            res.json({
-                                message: 'Đăng nhập thành công!',
-                                token,
-                                user
-                            })
-                        }else{
-                            res.json({
-                                message: 'Mật khẩu không đúng, vui lòng thử lại!'
-                            })
-                        }
-                    })
-                }else{
-                    res.json({
-                        message: 'không tìm thấy thông tin tài khoản!'
-                    })
-                }
-            })
+        .then(user =>{
+            if(user){
+                bcrypt.compare(password, user.password, function(err, result){
+                    if(err){
+                        res.json({
+                            error: err
+                        })
+                    }
+                    if(result){
+                        let token = jwt.sign({name: user.name, email: user.email}, 'verySecretValue', {expiresIn: '1h'})
+                        const {password, ...others} = user._doc;
+                        res.json({
+                            message: 'Đăng nhập thành công!',
+                            token,
+                            ...others
+                        })
+                    }else{
+                        res.json({
+                            message: 'Mật khẩu không đúng, vui lòng thử lại!'
+                        })
+                    }
+                })
+            }else{
+                res.json({
+                    message: 'không tìm thấy thông tin tài khoản!'
+                })
+            }
+        })
     }
 }
 module.exports = new NewsController();

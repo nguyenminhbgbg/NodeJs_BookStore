@@ -5,13 +5,19 @@ const port = 3000;
 const morgan = require('morgan');
 const handlebars = require('express-handlebars');
 const db = require('./config/db/index');
+
 const SortMiddleware = require('./app/middlewares/SortMiddleware');
+const Pagination = require('./app/middlewares/Pagination');
+
+var cookieParser = require('cookie-parser')
 
 var methodOverride = require('method-override');
 // connect to DB
 db.connect();
 
 const route = require('./routes');
+
+app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/img' , express.static('uploads'))
 app.use(
@@ -25,6 +31,7 @@ app.use(methodOverride('_method'));
 
 // Custom Middleware
 app.use(SortMiddleware);
+app.use(Pagination);
 
 // http logger
 // app.use(morgan('combined'))
@@ -39,9 +46,9 @@ app.engine(
             sortable: (field , sort) =>{
                 const sortType = field === sort.column ? sort.type : 'default';
                 const icons = {
-                    default: 'oi oi-elevator',
-                    asc: 'oi oi-sort-ascending',
-                    desc: 'oi oi-sort-descending'
+                    default: 'fas fa-sort',
+                    asc: 'fas fa-sort-alpha-down',
+                    desc: 'fas fa-sort-alpha-down-alt'
                 }
 
                 const types = {
@@ -53,17 +60,19 @@ app.engine(
                 const type = types[sortType];
 
                 return `<a href="?_sort&column=${field}&type=${type}">
-                <span class="${icon}"></span></a>`
+                <i class="${icon}"></i>`
             },
-            pagination: (field , page) =>{
-                const pages = page +1;
-                return `<a href="?_pagination&column=${field}&page=${pages}"> `
+            showIndexPagination: ( page ) =>{
+                // const pageName = field === page.pageName ? page.page : 1;
+                const pageNum = page;
+                return `<a href="?_pagination&page=${pageNum}">${pageNum}</a>`
             },
         },
         
     }),
 );
 app.set('view engine', 'hbs');
+// 
 app.set('views', path.join(__dirname, 'resources', 'view'));
 
 // route init
