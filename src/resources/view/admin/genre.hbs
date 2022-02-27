@@ -32,7 +32,7 @@
           </button>
           <div class="" style="position: absolute; right: 10px">
             <a class="btn btn-add" href="/admin/genre/create">
-            <i class="fas fa-plus"></i> Thêm thể loại</a>
+            <i class="fas fa-plus"></i> Mới</a>
             <a class="btn btn-secondary " role="button" href="/admin/genre/trash">Thùng rác ({{deleteCount}}) <i class="fas fa-trash-alt"></i></a>
           </div>
         </div>
@@ -67,8 +67,8 @@
                       <td>{{this.description}}</td>
                       <td>{{this.createdAt}}</td>
                       <td>
-                          <a style="min-width: 70px; max-width: 70px;" role="button" class="btn btn-success mt-2" href="/admin/genre/{{this._id}}/edit" class="btn btn-link">Sửa</a>
-                          <a style="min-width: 70px; max-width: 70px;" role="button" class="btn btn-danger mt-2" href="" class="btn btn-link" data-toggle="modal" data-id="{{this._id}}" data-target="#delete-genre-modal" >Xóa</a>
+                          <a style="min-width: 40px; max-width: 40px;" role="button" class="btn mt-2" href="/admin/genre/{{this._id}}/edit" class="btn btn-link"><i class="fas fa-edit"></i></a>
+                          <a style="min-width: 40px; max-width: 40px;" role="button" class="btn mt-2" href="" class="btn btn-link" data-toggle="modal" data-id="{{this._id}}" data-target="#delete-genre-modal" ><i class="fas fa-trash-alt"></i></a>
                       </td>
                   </tr>
 

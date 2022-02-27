@@ -1,69 +1,69 @@
+{{> header}}
+<div class="container">
+  <h3 class="d-flex justify-content-center mt-4">Danh sách chapter đã xóa</h3>
+  <a class="btn btn-secondary mb-2" role="button" href="/admin/chapter"><i class="fas fa-arrow-left mr-1"></i>Quay lại</a>
+  <div class="table-responsive">
+      <form class="mt-4" name="container-form" method="POST" action="/admin/chapter/handle-form-trash-action">
+          <div class="mt-4 ml-3 d-flex">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="checkbox-all">
+              <label class="form-check-label" for="checkbox-all">
+                Chọn tất cả
+              </label>
+            </div>
+            <select style="min-width: 160px" class="form-control form-control-sm col-sm-2 ml-2 mr-2" name="action" required>
+              <option value="">-- Chọn hành động --</option>
+              <option value="delete">Xóa Vĩnh viễn</option>
+              <option value="restore">Khôi phục</option>
+            </select>
 
-<h3 class="d-flex justify-content-center mt-4">Danh sách chapter đã xóa</h3>
-<a class="btn btn-secondary mb-2" role="button" href="/admin/chapter"><i class="fas fa-arrow-left mr-1"></i>Quay lại</a>
-<div class="card shadow mb-4">
-<div class="table-responsive">
-    <form class="mt-4" name="container-form" method="POST" action="/admin/chapter/handle-form-trash-action">
-        <div class="mt-4 ml-3 d-flex">
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="checkbox-all">
-            <label class="form-check-label" for="checkbox-all">
-              Chọn tất cả
-            </label>
+            <button class="btn btn-primary btn-sm check-all-submit-btn" disabled="disabled">
+              Thực hiện
+            </button>
           </div>
-          <select style="min-width: 160px" class="form-control form-control-sm col-sm-2 ml-2 mr-2" name="action" required>
-            <option value="">-- Chọn hành động --</option>
-            <option value="delete">Xóa Vĩnh viễn</option>
-            <option value="restore">Khôi phục</option>
-          </select>
 
-          <button class="btn btn-primary btn-sm check-all-submit-btn" disabled="disabled">
-            Thực hiện
-          </button>
-        </div>
+          <table class="mt-4">
+              <thead>
+                  <tr>
+                      <td></td>
+                      <th scope="col">ID</th>
+                      <th class="sorting col-lg-2" scope="col">Tên chương</th>
+                      <th class="sorting col-lg-5" scope="col">Nội dung</th>
+                      <th class="sorting col-lg-2" scope="col">Thời gian xóa</th>
+                      <th scope="col"></th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {{#each chapters}}
+                  <tr>
+                      <td>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" name="chapterIds[]" value="{{this._id}}">
+                          </label>
+                        </div>
+                      </td>
+                      <th scope="row">{{sum @index 1 }}</th>
+                      <td style="padding-bottom: 6px; ">{{this.chapterName}}</td>
+                      <td style="padding-bottom: 6px; " class="max-lines">{{this.content}}</td>
+                      <td style="padding-bottom: 6px; ">{{this.deletedAt}}</td>
+                      <td>
+                          <a style="min-width: 40px; max-width: 40px;" role="button" href="" data-id={{this._id}} class="btn mt-2 btn-restore"><i class="fas fa-trash-restore"></i></a>
+                          <a style="min-width: 40px; max-width: 40px;" role="button" class="btn mt-2" href="" class="btn btn-link" data-toggle="modal" data-id="{{this._id}}" data-target="#delete-book-modal" ><i class="fas fa-trash-alt"></i></a>
+                      </td>
+                  </tr>
 
-        <table class="mt-4">
-            <thead>
-                <tr>
-                    <td></td>
-                    <th scope="col">ID</th>
-                    <th class="sorting col-lg-2" scope="col">Tên chương</th>
-                    <th class="sorting col-lg-5" scope="col">Nội dung</th>
-                    <th class="sorting col-lg-2" scope="col">Thời gian xóa</th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody>
-                {{#each chapters}}
-                <tr>
-                    <td>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="chapterIds[]" value="{{this._id}}">
-                        </label>
-                      </div>
+                  {{else}}
+                  <tr>
+                    <td colspan="5" class="text-center">
+                      Thùng rác trống.
+                      <a href="/admin/chapter">danh sách chapter</a>
                     </td>
-                    <th scope="row">{{sum @index 1 }}</th>
-                    <td style="padding-bottom: 6px; ">{{this.chapterName}}</td>
-                    <td style="padding-bottom: 6px; " class="max-lines">{{this.content}}</td>
-                    <td style="padding-bottom: 6px; ">{{this.deletedAt}}</td>
-                    <td>
-                        <a style="min-width: 110px; max-width: 110px;" role="button" href="" data-id={{this._id}} class="btn btn-success mt-2 btn-restore">Khôi phục</a>
-                        <a style="min-width: 110px; max-width: 110px;" role="button" class="btn btn-danger mt-2" href="" class="btn btn-link" data-toggle="modal" data-id="{{this._id}}" data-target="#delete-book-modal" >Xóa vĩnh viễn</a>
-                    </td>
-                </tr>
-
-                {{else}}
-                <tr>
-                  <td colspan="5" class="text-center">
-                    Thùng rác trống.
-                    <a href="/admin/chapter">danh sách chapter</a>
-                  </td>
-                </tr>
-                {{/each}}
-            </tbody>
-        </table>
-    </form>
-</div>
+                  </tr>
+                  {{/each}}
+              </tbody>
+          </table>
+      </form>
+  </div>
 </div>
 {{!-- confirm Dele book --}}
 

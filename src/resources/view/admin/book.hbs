@@ -35,7 +35,7 @@
               </button>
               <div class="" style="position: absolute; right: 10px">
                   <a class="btn btn-add" role="button" href="/admin/book/create">
-                  <i class="fas fa-plus"></i> Thêm sách</a>
+                  <i class="fas fa-plus"></i> Mới</a>
                   <a class="btn btn-secondary" role="button" href="/admin/book/trash">Thùng rác ({{deleteCount}}) <i class="fas fa-trash-alt"></i></a>
               </div>
             </div>
@@ -70,8 +70,8 @@
                           <td>{{this.author}}</td>
                           <td>{{this.language}}</td>
                           <td>
-                              <a style="min-width: 50px; max-width: 50px;" role="button" href="/admin/book/{{this._id}}/edit" class="btn btn-success mt-2"><i class="fas fa-edit"></i></a>
-                              <a style="min-width: 50px; max-width: 50px;" role="button" href="" class="btn btn-danger mt-2" data-toggle="modal" data-id="{{this._id}}" data-target="#delete-book-modal" ><i class="fas fa-trash-alt"></i></a>
+                              <a style="min-width: 40px; max-width: 40px;" role="button" href="/admin/book/{{this._id}}/edit" class="btn mt-2"><i class="fas fa-edit"></i></a>
+                              <a style="min-width: 40px; max-width: 40px;" role="button" href="" class="btn mt-2" data-toggle="modal" data-id="{{this._id}}" data-target="#delete-book-modal" ><i class="fas fa-trash-alt"></i></a>
                           </td>
                       </tr>
 

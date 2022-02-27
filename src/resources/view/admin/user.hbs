@@ -66,8 +66,8 @@
                           {{!-- <td>{{this.password}}</td> --}}
                           <td>{{this.createdAt}}</td>
                           <td>
-                              <a role="button" class="btn btn-success mt-2" href="/admin/user/{{this._id}}/edit" class="btn btn-link">Sửa</a>
-                              <a role="button" class="btn btn-danger mt-2" href="" class="btn btn-link" data-toggle="modal" data-id="{{this._id}}" data-target="#delete-book-modal" >Xóa</a>
+                              <a role="button" class="btn mt-2" href="/admin/user/{{this._id}}/edit" class="btn btn-link"><i class="fas fa-edit"></i></a>
+                              <a role="button" class="btn mt-2" data-toggle="modal" data-id="{{this._id}}" data-target="#delete-book-modal" ><i class="fas fa-trash-alt"></i></a>
                           </td>
                       </tr>
 
@@ -84,15 +84,17 @@
           </form>
       </div>
     </div>
-    <nav style="width: 100%; position: relative;" aria-label="Page navigation example">
-      <ul class="pagination" style="right: 0px; position: absolute">
-        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-        <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
-        <li class="page-item"><a class="page-link" href="?page=2">2</a></li>
-        <li class="page-item"><a class="page-link" href="?page=3">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-      </ul>
-    </nav>
+    <div style="display: flex; justify-content: space-between;" class="pagination">
+        <div class="lef-pagination">
+          Hiển thị {{page}} đến 6 trong 6 mục
+        </div>
+        <div class="right-pagination">
+          <button type="button" id="btn-previous" data-id="{{page}}" class="btn"><i class="fas fa-angle-double-left"></i></button>
+          <button type="button" class="btn">{{page}}</button>
+          <button type="button" data-id="{{page}}" id="btn-next" class="btn"><i class="fas fa-angle-double-right"></i></button>
+
+        </div>
+    </div>
   </div>
 </body>
 </html>
@@ -124,13 +126,27 @@
 </form>
 <form method="POST" name="page-onclick">
 </form>
+<form method="GET" name="page-previous">
+</form>
+<form method="GET" name="page-next">
+</form>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var userId;
+        var pageNumber = 1
+        var pagePrevious = pageNumber - 1;
+        var pageNext = pageNumber + 1;
+
         var deleteForm = document.forms['delete-book-form'];
         var pageOnclickForm = document.forms['page-onclick'];
+        var pagePreviousForm = document.forms['page-previous'];
+        var pageNextForm = document.forms['page-next'];
         var containerForm = $('form[name="container-form"]');
+
         var btnDeleteBook = document.getElementById('btn-delete-book');
+        var btnPrevious = document.getElementById('btn-previous');
+        var btnNext = document.getElementById('btn-next');
+
         var checkboxAll = $('#checkbox-all');
         var bookItemCheckbox = $('input[name="userIds[]"]');
         var checkAllSubmitBtn = $('.check-all-submit-btn');
@@ -153,7 +169,15 @@
             deleteForm.action = '/admin/user/' + userId + '/delete?_method=DELETE';
             deleteForm.submit();
         }
-
+        // when btnPrevious btn clicks
+        btnPrevious.onclick = function(){
+            pagePreviousForm.action = '/admin/user/?page='+ 3 ;
+            pagePreviousForm.submit();
+        }
+        btnNext.onclick = function(){
+            pageNextForm.action = '/admin/user/?page=' + pageNext ;
+            pageNextForm.submit();
+        }
         // checkbox all clicked
         checkboxAll.change(function(){
           var isCheckedAll = $(this).prop('checked');

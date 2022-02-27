@@ -16,7 +16,7 @@ class NewsController {
     
     // [GET] /admin/book
     listBook(req, res, next) {
-        var page = req.query.page;
+        var page = req.query.page || 1;
         if(page){
             page = parseInt(page);
             if(page< 1){
@@ -388,7 +388,7 @@ class NewsController {
     }
                     // Quản lý User
     user(req, res, next) {
-        var page = req.query.page;
+        var page = req.query.page || 1;
         if(page){
             page = parseInt(page);
             if(page< 1){
@@ -410,6 +410,8 @@ class NewsController {
                 res.render('admin/user', {
                     deleteCount,
                     users,
+                    page,
+                    
                 }),
             )
             .catch(next);
